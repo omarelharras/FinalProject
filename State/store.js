@@ -1,14 +1,11 @@
-import { createStore, combineReducers } from "redux";
-import {reducerFunction} from "./reducer"
+import { createStore, combineReducers, applyMiddleware } from "redux";
 
-const rootReducer = combineReducers(
-    {
-        userReducer: reducerFunction
-    }
-);
+import reducer from "../State/reducer";
 
-const storeFunction = () => {
-    return createStore(rootReducer);
-}
+const rootReducer = combineReducers({
+  authReducer: reducer
+});
 
-export default storeFunction;
+const Store = createStore(rootReducer);
+
+export default Store;

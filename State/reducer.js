@@ -1,32 +1,46 @@
-import { getUsers } from "./actions";
-import { validateData } from "./actions";
+import { LOGIN_FAILED, LOGIN_SUCCESS, LOGOUT, TRY_LOGIN } from "./actions";
 
-const IntialState = {
-    Users: [],
-    validData: 0
-}
+const initialState = {
+  loading: false,
+  loggedIn: false,
+  email: "",
+  password: "",
+  errorMessage:""
+};
 
-const reducerFunction = (state = IntialState, action) => {
-    switch (action.type) {
-        case getUsers:
-            return { ...state, Users: action.payload };
-        case validateData: {
-            var IsDataValid = 0;
-            var EmailIndex = -1;
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case TRY_LOGIN:
+      return {
+        ...state,
+        loading: true,
+        email: action.payload.email,
+        password: action.payload.password,
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loggedIn: true,
+      };
+    case LOGIN_FAILED:
+      return {
+        ...state,
+        loading: false,
+        loggedIn: false,
+        errorMessage:action.payload
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        loading: false,
+        loggedIn: false,
+        email: "",
+        password: "",
+      };
+    default:
+      return state;
+  }
+};
 
-            for (let i = 0; i < Users.length; i++) {
-                if (Users[i].Email == action.payload.Email)
-                    EmailIndex = i;
-            }
-            if (EmailIndex != -1) {
-                if (Users[EmailIndex].Password == action.payload.Password)
-                    IsDataValid = 1;
-            }
-            return { ...state, validData: IsDataValid };
-        }
-        default:
-            return (state);
-    }
-}
-
-export default reducerFunction;
+export default reducer;

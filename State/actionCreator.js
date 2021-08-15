@@ -1,22 +1,32 @@
-import { getUsers } from "./actions";
-import { validateData } from "./actions";
+import { LOGIN_FAILED, LOGIN_SUCCESS, LOGOUT, TRY_LOGIN } from "./actions";
 
-const Users = [];
-export function HandleGetUsers() {
-    fetch('http://localhost:3000/Users')
-        .then((response) => {
-            Users = response.json();
-        })
-    return {
-        type: getUsers,
-        payload: Users
-    }
+export const tryLogin = (email, password) => {
+  debugger;
+  return {
+    type: TRY_LOGIN,
+    payload: {
+      email,
+      password,
+    },
+  };
 };
 
-export const HandleValidateData = (Email, Password) => {
+export const loginSuccess = () => {
+  debugger;
+  return {
+    type: LOGIN_SUCCESS,
+  };
+};
 
-    return {
-        type: validateData,
-        payload: { Email, Password }
-    }
+export const loginfaild = () => {
+  return {
+    type: LOGIN_FAILED,
+    payload:"falied to login"
+  };
+};
+
+export const logout = () => {
+  return {
+    type: LOGOUT,
+  };
 };
